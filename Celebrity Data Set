@@ -1,0 +1,158 @@
+/*This Dataset shows knowledge on using the JOIN functions in SQL. The following datasets will demonstrate common movies these celebrities are involved in, as well as other factors.*/
+
+/*The dataset contains a list of celebrities, following their age and occupation.*/
+
+CREATE TABLE stars 
+(id INTEGER PRIMARY KEY,
+name TEXT, 
+occupation TEXT,
+age INTEGER);
+/*The next dataset will include a list of movies. Following the title, year released, and main actors/actress in the movies.*/
+
+CREATE TABLE movies 
+(id INTEGER PRIMARY KEY, 
+title TEXT,
+release_year INTEGER, 
+actor1_id INTEGER,
+actor2_id INTEGER
+);
+
+INSERT INTO stars VALUES 
+(1,"Selena Gomez", "Singer", 30);
+INSERT INTO stars VALUES 
+(2,"Beyonce", "Singer", 41);
+INSERT INTO stars VALUES 
+(3,"Tom Holland", "Actor", 26);
+INSERT INTO stars VALUES 
+(4, "Robert Downey JR", "Actor", 58);
+INSERT INTO stars VALUES 
+(5, "Donald Glover", "Singer", 39);
+INSERT INTO stars VALUES 
+(6, "Betty White", "Actress", 99);
+INSERT INTO stars VALUES 
+(7, "Keanu Reeves", "Actor", 58);
+INSERT INTO stars VALUES
+(8, "Blake Lively", "Actress", 35);
+INSERT INTO stars VALUES
+(9, "Ryan Reynolds", "Actor",46);
+INSERT INTO stars VALUES
+(10, "Anna Kendrick", "Actress",37);
+INSERT INTO stars VALUES
+(11, "Henry Golding", "Actor",36 );
+INSERT INTO stars VALUES
+(12, "Constance Wu", "Actress", 41);
+INSERT INTO stars VALUES
+(13, "Zac Efron", "Actor", 35);
+INSERT INTO stars VALUES
+(14, "Adam Sandler", "Actor", 56);
+INSERT INTO stars VALUES
+(15, "Tori Kelly", "Singer", 30);
+INSERT INTO stars VALUES
+(16, "Harry Styles", "Singer",29 );
+INSERT INTO stars VALUES
+(17, "Matthew McConaughey", "Actor", 53);
+
+
+INSERT INTO movies VALUES
+(1, "Toy Story 4", 2019, 7, 6);
+INSERT INTO movies VALUES
+(2, "Toy Story 4", 2019, 6, 7);
+INSERT INTO movies VALUES
+(3, "Dolittle", 2019, 1, 4);
+INSERT INTO movies VALUES
+(4,"Hotel Transylvania", 2022, 14, 2);
+INSERT INTO movies VALUES
+(5,"Hotel Transylvania", 2022, 1, 14);
+INSERT INTO movies VALUES
+(6,"Neighbors 2: Sorority Rising", 2016, 13, 1);
+INSERT INTO movies VALUES
+(7,"Neighbors 2: Sorority Rising", 2016, 1, 13);
+INSERT INTO movies VALUES
+(8,"The Lion King",2019,2,5);
+INSERT INTO movies VALUES
+(9,"The Lion King",2019,5,2);
+INSERT INTO movies VALUES
+(10,"Avengers Endgame",2019,3,4);
+INSERT INTO movies VALUES
+(11,"Spider-Man:Far From Home",2019,3,4);
+INSERT INTO movies VALUES
+(12,"Spider-Man:Homecoming",2017,3,4);
+INSERT INTO movies VALUES
+(13, "Dolittle", 2019, 3, 4);
+INSERT INTO movies VALUES
+(14, "Dolittle", 2019, 4, 1);
+INSERT INTO movies VALUES
+(15,"Avengers Endgame",2019,4,3);
+INSERT INTO movies VALUES
+(16,"Spider-Man:Far From Home",2019,4,3);
+INSERT INTO movies VALUES
+(17,"Spider-Man:Homecoming",2017,4,3);
+INSERT INTO movies VALUES
+(18, "Up Close With Carrie Keagan", 2007, 4, 9);
+INSERT INTO movies VALUES
+(22, "Up Close With Carrie Keagan", 2007, 9,4);
+INSERT INTO movies VALUES
+(20,"Spider-Man:Homecoming",2017,5,4);
+INSERT INTO movies VALUES
+(21,"Spider-Man:Homecoming",2017,4,5);
+INSERT INTO movies VALUES
+(23, "The Proposal", 2009, 6, 9);
+INSERT INTO movies VALUES
+(24, "The Proposal", 2009, 9,6);
+INSERT INTO movies VALUES
+(25, "Always Be My Maybe", 2019, 12,7);
+INSERT INTO movies VALUES
+(26, "Always Be My Maybe", 2019, 7, 12);
+INSERT INTO movies VALUES
+(27, "A Simple Favor", 2018, 8, 10);
+INSERT INTO movies VALUES
+(28, "A Simple Favor", 2018, 10, 11);
+INSERT INTO movies VALUES
+(29, "A Simple Favor", 2018, 11, 8);
+INSERT INTO movies VALUES
+(30, "The Green Lantern", 2011, 8, 9);
+INSERT INTO movies VALUES
+(31, "The Green Lantern", 2011, 9,8);
+INSERT INTO movies VALUES
+(32, "The Voices", 2014, 9, 10);
+INSERT INTO movies VALUES
+(33, "The Voices", 2014, 10, 9);
+INSERT INTO movies VALUES
+(34, "Sing", 2016, 15, 17);
+INSERT INTO movies VALUES
+(35, "Sing", 2016, 17, 15);
+INSERT INTO movies VALUES 
+(36, "The Beach Bum", 2019, 17, 13);
+INSERT INTO movies VALUES 
+(37, "The Beach Bum", 2019, 13, 17);
+
+
+/*Using JOIN to create a list of data that results in stars and the movies made, with their corresponding co-stars*/
+SELECT stars.name, movies.title, movies.release_year AS Year
+FROM stars
+INNER JOIN movies
+ON stars.id = movies.actor1_id
+ORDER BY movies.title;
+
+/* Uses the Left Outer Join which prints all movies with the corresponding actors, as well as stars with no movies in the dataset */
+SELECT stars.name, movies.title, movies.release_year AS Year
+FROM stars
+LEFT JOIN movies
+ON stars.id = movies.actor1_id
+ORDER BY movies.title;
+
+/* JOIN and WHERE clause. This SQL statement will use the data to find all movies made with Ryan Reynolds*/
+SELECT stars.name, movies.title, movies.release_year AS Year
+FROM stars
+INNER JOIN movies
+ON stars.id = movies.actor1_id
+WHERE stars.name = "Ryan Reynolds"
+ORDER BY movies.title;
+
+/* JOIN and WHERE clause. This SQL statement will use the data to find all movies made with Selena Gomez ordered by publish year*/
+SELECT stars.name, movies.title, movies.release_year AS Year
+FROM stars
+INNER JOIN movies
+ON stars.id = movies.actor1_id
+WHERE stars.name LIKE '%Sel%'
+ORDER BY movies.release_year;
