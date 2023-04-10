@@ -1,0 +1,39 @@
+/* This SQL is being used to query data about Shows/Movies that can be found on netflix.
+The dataset used was created by Charlotte Chaze via Break Into Tech certificate. */
+
+/*using the LEFT JOIN statement, to join two tables. 
+Results are a table with show_id, cast from the movie/show, title of the movie/show.
+ */
+SELECT people.show_id, people.cast, title.title
+FROM "CharlotteChaze/BreakIntoTech"."netflix_people" people
+LEFT JOIN "CharlotteChaze/BreakIntoTech"."netflix_titles_info" title
+ON people.show_id = title.show_id
+ORDER BY show_id;
+
+/*How many movie titles are there in the database? (movies only, not tv shows) */
+SELECT COUNT(*)
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+WHERE type = 'Movie';
+
+/*When was the most recent batch of tv shows and/or movies added to the database? */
+SELECT MAX(date(date_added))
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info";
+
+/*List all the movies and tv shows in alphabetical order.*/
+SELECT title
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+ORDER BY title ASC;
+
+/*Who was the Director for the movie Bright Star? */
+SELECT title.show_id, title.title, people.director 
+FROM "CharlotteChaze/BreakIntoTech"."netflix_people" people
+LEFT JOIN "CharlotteChaze/BreakIntoTech"."netflix_titles_info" title
+ON people.show_id = title.show_id
+WHERE title = 'Bright Star';
+
+/*What is the oldest movie in the database and what year was it made? */
+SELECT show_id, title, date_added
+FROM "CharlotteChaze/BreakIntoTech"."netflix_titles_info"
+WHERE type = 'Movie'
+ORDER BY date_added ASC
+LIMIT 1;
