@@ -1,0 +1,63 @@
+/*This database was created by Charlotte Chaze for the Break Into Tech Certificate. 
+The database contains data about customers and the sales made each month. 
+The purpose of this project was to answer questions using the database, while excluding all null values, and using the appropriate SQL syntax.
+*/
+
+
+/*How many orders were placed in January?
+This query counts all the orders placed in January sales 
+but excludes all null orders.*/
+SELECT COUNT(*)
+FROM BIT_DB.JanSales
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+/*How many of those orders were for an iPhone?
+This query counts all the orders placed in January sales
+that sold the product 'iPhone' while excluding all null orders.*/
+SELECT COUNT(*)
+FROM BIT_DB.JanSales
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID'
+AND Product = "iPhone";
+
+/*Select the customer account numbers for all the orders 
+that were placed in February*/
+SELECT Febsales.orderID, customers.acctnum
+FROM customers
+INNER JOIN febsales
+ON Febsales.orderID = customers.order_id
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+/*Which product was the cheapest one sold in January, 
+and what was the price?*/
+SELECT DISTINCT product, MIN(price) AS Min_price
+FROM Jansales;
+
+/*What is the total revenue for each product sold in January?*/
+Select Product, SUM(quantity)*price AS Total_Revenue
+FROM Jansales
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID'
+GROUP BY product;
+
+/*Which products were sold in February at 
+548 Lincoln St, Seattle, WA 98101,
+how many of each were sold, and what was the total revenue?
+*/
+SELECT Product, SUM(Quantity)*price AS Total_Revenue
+FROM Febsales
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID'
+AND location LIKE '%548 Lincoln St%';
+
+/*How many customers ordered more than 2 products at a time in February,
+and what was the average amount spent for those customers? */
+SELECT COUNT(DISTINCT customers.acctnum), AVG(Quantity*Price)
+FROM FebSales
+LEFT JOIN customers
+ON FebSales.orderID = customers.order_id
+WHERE FebSales.Quantity > 2
+AND length(orderID) = 6
+AND ORDERID <> 'Order ID';
