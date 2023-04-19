@@ -174,3 +174,30 @@ INSERT INTO BIT_DB.Spotifydata VALUES(
 INSERT INTO BIT_DB.Spotifydata VALUES(
 50,"Sebastian Yatra","Pareja Del AÃ±o","2rCbl9naJYhaxjLsfx88uM", 86	,0.715	,0.622	,4	,-5.102	,0	,0.046	,0.163	,0	,0.0948	,0.808	,80.015	,195053	,4);
 
+
+/*The dataset used was created by Hanna Yukhymenko and can be found on Kaggle through the link: https://www.kaggle.com/datasets/equinxx/spotify-top-50-songs-in-2021?resource=download
+The main purpose of the project was being able to download and export data from a platform, and come up with questions that can be answered using the data*/
+
+/*Get a good idea of the dataset*/
+SELECT * FROM Spotifydata;
+
+/*Determine which songs have the same danceability, and what their rank is. */
+SELECT A.id AS ID_1, B.id AS ID_2, A.artist_name AS Artist_1, B.artist_name AS Artist_2,
+A.track_name AS Track_1, B.track_name AS Track_2, A.danceability AS Dance_1 , B.danceability AS Dance_2,
+A.popularity AS Rank_1, B.popularity AS Rank_2
+FROM Spotifydata A, Spotifydata B
+WHERE A.id <> B.id
+AND A.danceability = B.danceability
+ORDER BY A.danceability;
+
+/*Find the top 10 songs on the chart*/
+SELECT id, artist_name, track_name, popularity
+FROM Spotifydata
+ORDER BY popularity DESC
+LIMIT 10;
+
+/*Find the average danceability, tempo, duration, and loudness of songs*/
+SELECT AVG(danceability), AVG(tempo), AVG(duration_ms), AVG(loudness)
+FROM Spotifydata
+ORDER BY duration_ms;
+
