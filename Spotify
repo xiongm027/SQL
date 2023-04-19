@@ -201,3 +201,15 @@ SELECT AVG(danceability), AVG(tempo), AVG(duration_ms), AVG(loudness)
 FROM Spotifydata
 ORDER BY duration_ms;
 
+
+/*Practice using a CTE: Calculate the average popularity for the artists in the Spotify data table. Then, for every artist with an average popularity of 90 or above, 
+show their name, their average popularity, and label them as a “Top Star” */
+WITH temp_table AS (
+SELECT artist_name, AVG(popularity) AS avg
+FROM Spotifydata
+GROUP BY artist_name
+)
+SELECT artist_name, avg, 'Top Star' AS tag
+ FROM temp_table
+ WHERE avg >= 90;
+
