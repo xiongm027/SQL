@@ -79,3 +79,14 @@ GROUP BY street
 SELECT DISTINCT street, avg_rating, "Safe Lane" AS 'label'
 FROM safe_cte
 WHERE avg_rating >=4;
+
+/*Practice using Windows in SQL. Use the Over & (Partition BY Street) To find the average of the two streets. 
+Also labeling the ratings for the bike lanes depending on the average rating. */
+SELECT street, safetyrating,
+AVG(safetyrating) OVER (PARTITION BY street) as Average_safety_rating,
+CASE
+    WHEN AVG(safetyrating) OVER (PARTITION BY street) >= 4 THEN 'Leave As-Is'
+    WHEN AVG(safetyrating) OVER (PARTITION BY street) <2.5 THEN 'Remove'
+    ELSE 'Needs Imporvement'
+END AS SafetyLabel
+FROM CityBikeLanes;
